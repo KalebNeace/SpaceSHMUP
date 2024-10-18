@@ -9,22 +9,35 @@ public class Main : MonoBehaviour
     static private Dictionary<eWeaponType, WeaponDefinition> WEAP_DICT;
 
     [Header("Inscribed")]
-    public bool spawnEnemies = true;
-    public GameObject[] prefabEnemies;
-    public float enemySpawnPerSecond = 0.5f;
-    public float enemyInsetDefault = 1.5f;
-    public float gameRestartDelay = 2;
-    public GameObject prefabPowerUp;
+    public bool               spawnEnemies = true;
+    public GameObject[]       prefabEnemies;
+    public float              enemySpawnPerSecond = 0.5f;
+    public float              enemyInsetDefault = 1.5f;
+    public float              gameRestartDelay = 2;
+    public GameObject         prefabPowerUp;
+    public AudioClip          backgroundMusic;
+    public AudioClip          deathSound;
     public WeaponDefinition[] weaponDefinitions;
     public eWeaponType[] powerUpFrequency = new eWeaponType[] {
                             eWeaponType.blaster, eWeaponType.blaster,
                             eWeaponType.spread, eWeaponType.shield };
 
     private BoundsCheck bndCheck;
+    private AudioSource deathSoundSource;
+    private AudioSource backgroundMusicSource;
 
     void Awake() {
         S = this;
         bndCheck = GetComponent<BoundsCheck>();
+
+        deathSoundSource = gameObject.AddComponent<AudioSource>();
+        deathSoundSource.clip = deathSound;
+
+        backgroundMusicSource = gameObject.AddComponent<AudioSource>();
+        backgroundMusicSource.clip = backgroundMusic;
+        backgroundMusicSource.Play();
+        backgroundMusicSource.volume = 0.25f;
+        backgroundMusicSource.loop = true;
 
         Invoke(nameof(SpawnEnemy), 1f/enemySpawnPerSecond);
 
@@ -59,11 +72,13 @@ public class Main : MonoBehaviour
     }
 
     void DelayedRestart() {
+        backgroundMusicSource.Stop();
+        deathSoundSource.Play();
         Invoke(nameof(Restart), gameRestartDelay);
     }
 
     void Restart() {
-        SceneManager.LoadScene("__Scene_0");
+        SceneManager.LoadScene("GameOver");
     }
 
     static public void HERO_DIED() {

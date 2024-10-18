@@ -47,9 +47,9 @@ public class Weapon : MonoBehaviour
     public WeaponDefinition def;
     public float nextShotTime;
 
-    private GameObject weaponModel;
-    private Transform shotPointTrans;
-
+    private GameObject  weaponModel;
+    private Transform   shotPointTrans;
+    private AudioSource laserSound;
     void Start()
     {
         if (PROJECTILE_ANCHOR == null) {
@@ -62,6 +62,7 @@ public class Weapon : MonoBehaviour
         SetType(_type);
 
         Hero hero = GetComponentInParent<Hero>();
+        laserSound = GetComponent<AudioSource>();
         if (hero != null) hero.fireEvent += Fire;
     }
 
@@ -96,6 +97,7 @@ public class Weapon : MonoBehaviour
 
         ProjectileHero p;
         Vector3 vel = Vector3.up * def.velocity;
+        laserSound.Play();
 
         switch (type)
         {

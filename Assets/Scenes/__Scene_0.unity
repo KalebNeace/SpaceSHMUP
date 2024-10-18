@@ -441,6 +441,8 @@ MonoBehaviour:
   enemyInsetDefault: 1.5
   gameRestartDelay: 2
   prefabPowerUp: {fileID: 1373467038066973957, guid: c1732cb4112327e47b11f97fb2dc2af1, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 1110a54a3a90f044f9ec43d189a41be1, type: 3}
+  deathSound: {fileID: 8300000, guid: d67eb31c31219c242ba8edb2d38b2c28, type: 3}
   weaponDefinitions:
   - type: 1
     letter: B

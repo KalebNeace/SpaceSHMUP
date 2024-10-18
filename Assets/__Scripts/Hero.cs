@@ -8,12 +8,12 @@ public class Hero : MonoBehaviour
 
     [Header("Inscribed")]
 
-    public float speed = 30;
-    public float rollMult = -45;
-    public float pitchMult = 30;
-    public GameObject projectilePrefab;
-    public float projectileSpeed = 40;
-    public Weapon[] weapons;
+    public float        speed = 30;
+    public float        rollMult = -45;
+    public float        pitchMult = 30;
+    public GameObject   projectilePrefab;
+    public float        projectileSpeed = 40;
+    public Weapon[]     weapons;
 
     [Header("Dynamic")] [Range(0,4)] [SerializeField]
     private float _shieldLevel = 1;
@@ -29,7 +29,6 @@ public class Hero : MonoBehaviour
         else {
             Debug.LogError("Hero.Awake() - Attempted to assign second Hero.S!");
         }
-        //fireEvent += TempFire;
 
         ClearWeapons();
         weapons[0].SetType(eWeaponType.blaster);
@@ -45,10 +44,6 @@ public class Hero : MonoBehaviour
         transform.position = pos;
 
         transform.rotation = Quaternion.Euler(vAxis*pitchMult,hAxis*rollMult,0);
-
-        //if (Input.GetKeyDown(KeyCode.Space)) {
-        //    TempFire();
-        //}
 
         if (Input.GetAxis("Jump") == 1 && fireEvent != null) {
             fireEvent();
@@ -79,7 +74,7 @@ public class Hero : MonoBehaviour
     }
 
     public void AbsorbPowerUp(PowerUp pUp) {
-        Debug.Log("Absorbed PowerUp: " + pUp.type);
+        //Debug.Log("Absorbed PowerUp: " + pUp.type);
         switch (pUp.type) {
         case eWeaponType.shield:
             shieldLevel++;
